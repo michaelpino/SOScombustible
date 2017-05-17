@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_sos"
+            android:icon="@drawable/ic_explore"
+            android:title="@string/menu_sos" />
+        <item
+            android:id="@+id/menu_estaciones"
+            android:icon="@drawable/ic_storage"
+            android:title="@string/menu_estaciones" />
+    </group>
+
+    <item android:title="@string/menu_Opciones">
+        <menu>
+            <item
+                android:id="@+id/menu_ayuda"
+                android:icon="@drawable/ic_action_help"
+                android:title="@string/menu_ayuda" />
+            <item
+                android:id="@+id/menu_configuracion"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="@string/menu_Configuracion" />
+        </menu>
+    </item>
+
+</menu>

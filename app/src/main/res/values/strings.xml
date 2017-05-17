@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SOS combustible</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="menu_titulo">Menú</string>
+    <string name="menu_sos">SOS</string>
+    <string name="menu_estaciones">Estaciones de Servicio</string>
+    <string name="menu_Opciones">Opciones</string>
+    <string name="menu_ayuda">Ayuda</string>
+    <string name="menu_Configuracion">Configuración</string>
+</resources>
