@@ -92,7 +92,7 @@ public class EstacionesFragment extends Fragment {
     }
 
     /*public void enContruccion(View vista) {
-        Toast toast = Toast.makeText(, "Más detalles proximamente :)", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText( "Más detalles proximamente :)", Toast.LENGTH_SHORT);
         toast.show();
     }*/
 
