@@ -25,6 +25,11 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Aqui inicia el fragment de SOS (Pantalla iicial)
+        Fragment fragment = null;
+        fragment = new SosFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.Contenedor, fragment).commit();
+
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,19 +88,23 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         Fragment fragment = null;
-        Boolean fragmento_seleccionado = false;
+        int fragmento_seleccionado = 0;
 
         if (id == R.id.menu_sos) {
+            fragment = new SosFragment();
+            fragmento_seleccionado = 1;
         } else if (id == R.id.menu_estaciones) {
             fragment = new EstacionesFragment();
-            fragmento_seleccionado = true;
+            fragmento_seleccionado = 2;
         } else if (id == R.id.menu_ayuda) {
-
+            fragment = new AyudaFragment();
+            fragmento_seleccionado = 3;
         } else if (id == R.id.menu_configuracion) {
-
+            fragment = new ConfiguracionFragment();
+            fragmento_seleccionado = 4;
         }
 
-        if(fragmento_seleccionado){
+        if(fragmento_seleccionado!=0){
             getSupportFragmentManager().beginTransaction().replace(R.id.Contenedor, fragment).commit();
         }
 
