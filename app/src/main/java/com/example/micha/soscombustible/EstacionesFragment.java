@@ -73,13 +73,15 @@ public class EstacionesFragment extends Fragment {
             //Se rellena el imageview con el logo segun corresponda
             ImageView imageView1 = (ImageView)item.findViewById(R.id.item_logo);
             if (listaBencineras[posicion].getLogo()==1)
-                imageView1.setImageResource(R.drawable.copec);
+                imageView1.setImageResource(R.drawable.ic_copec_horizontal);
             else if (listaBencineras[posicion].getLogo()==2)
-                imageView1.setImageResource(R.drawable.shell);
+                imageView1.setImageResource(R.drawable.ic_shell_horizontal);
             else if (listaBencineras[posicion].getLogo()==3)
-                imageView1.setImageResource(R.drawable.petrobras);
+                imageView1.setImageResource(R.drawable.ic_petrobras_horizontal);
             else if (listaBencineras[posicion].getLogo()==4)
-                imageView1.setImageResource(R.drawable.terpel);
+                imageView1.setImageResource(R.drawable.ic_terpel_horizontal);
+            else if (listaBencineras[posicion].getLogo()==5)
+                imageView1.setImageResource(R.drawable.ic_lipigas_horizontal);
 
             //Se rellena el imageview con el icono de "ver más"
             ImageView imageView2 = (ImageView)item.findViewById(R.id.item_vermas);
