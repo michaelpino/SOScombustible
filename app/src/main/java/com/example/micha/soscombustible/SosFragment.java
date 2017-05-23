@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.Random;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -102,9 +104,11 @@ public class SosFragment extends Fragment {
             LayoutInflater inflater = context.getLayoutInflater();
             View item = inflater.inflate(R.layout.itemdesos, null);
 
+            Random rn = new Random();
+
             //Se rellena el textview de la distancia
             TextView tv_distancia = (TextView)item.findViewById(R.id.itemsos_distancia);
-            tv_distancia.setText("50");
+            tv_distancia.setText(" "+rn.nextInt(150)+" ");
 
             //Se rellena el textview de la unidad de medida
             TextView tv_unidad = (TextView)item.findViewById(R.id.itemsos_unidadmedida);
@@ -127,13 +131,35 @@ public class SosFragment extends Fragment {
             else if (listaSOS[posicion].getLogo()==5)
                 imageView1.setImageResource(R.drawable.ic_lipigas_horizontal);
 
+            //Se rellena los imageview de las caracteristicas de la estacion
+            if (rn.nextDouble()>0.5) {
+                imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac1);
+                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+            }
+            if (rn.nextDouble()>0.5) {
+                imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac2);
+                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+            }
+            if (rn.nextDouble()>0.5) {
+                imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac3);
+                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+            }
+            if (rn.nextDouble()>0.5) {
+                imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac4);
+                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+            }
+            if (rn.nextDouble()>0.5) {
+                imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac5);
+                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+            }
+
             //Se rellena el textview del octanaje
             TextView tv_octanaje = (TextView)item.findViewById(R.id.itemsos_octanaje);
             tv_octanaje.setText("93 Octanos");
 
             //Se rellena el textview del octanaje
             TextView tv_precio = (TextView)item.findViewById(R.id.itemsos_precio);
-            tv_precio.setText("$680/L");
+            tv_precio.setText("$"+rn.nextInt(700)+"/L");
 
             return(item);
         }

@@ -48,15 +48,51 @@
         <TextView
             android:id="@+id/itemsos_direccion"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="0.3"
             android:gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="0.4">
+
+            <ImageView
+                android:id="@+id/itemsos_carac1"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.3"
+                android:layout_gravity="center"
+                />
+            <ImageView
+                android:id="@+id/itemsos_carac2"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.3"
+                android:layout_gravity="center"
+                />
+            <ImageView
+                android:id="@+id/itemsos_carac3"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.3"
+                android:layout_gravity="center"
+                />
+            <ImageView
+                android:id="@+id/itemsos_carac4"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.3"
+                android:layout_gravity="center"
+                />
+            <ImageView
+                android:id="@+id/itemsos_carac5"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.3"
+                android:layout_gravity="center"
+                />
 
         </LinearLayout>
 
