@@ -8,13 +8,20 @@ public class Bencinera {
     private int id;
     private String nombre;
     private String direccion;
+    private int region;
+    private String comuna;
     private int logo;
+
+
 
     public Bencinera(int code, String name, String address, int logo){
         this.setId(code);
         this.setNombre(name);
         this.setDireccion(address);
         this.setLogo(logo);
+        this.setRegion(13);
+        this.setComuna("Santiago");
+
     }
 
     public String getNombre() {
@@ -48,4 +55,21 @@ public class Bencinera {
     public void setLogo(int logo) {
         this.logo = logo;
     }
+
+    public String getComuna() {
+        return comuna;
+    }
+
+    public void setComuna(String comuna) {
+        this.comuna = comuna;
+    }
+
+    public int getRegion() {
+        return region;
+    }
+
+    public void setRegion(int region) {
+        this.region = region;
+    }
+
 }
