@@ -22,8 +22,7 @@ public class DetalleActivity extends AppCompatActivity {
                 new Bencinera(2,"Estacion Flanders","Av. siempre viva 740",1),
                 new Bencinera(3,"Estacion Moe","Av. desconocida 1234",3)};
 
-        //int posicion = getIntent().getIntExtra("estacion_seleccionada");
-        //String palabra = getIntent().getStringExtra("estacion_seleccionada");
+        //Aqui se recibe el item seleccionado en el Fragment de origen
         Bundle info = this.getIntent().getExtras();
         int posicion = info.getInt("estacion_seleccionada");
 

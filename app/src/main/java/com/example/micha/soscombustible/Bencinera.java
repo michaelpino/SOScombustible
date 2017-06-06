@@ -14,6 +14,7 @@ public class Bencinera {
 
 
 
+
     public Bencinera(int code, String name, String address, int logo){
         this.setId(code);
         this.setNombre(name);

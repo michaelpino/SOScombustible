@@ -93,16 +93,34 @@
             android:layout_weight="0.2"
             android:weightSum="1">
 
-            <TextView
-                android:id="@+id/detalle_direccion"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_weight="0.5"/>
+                android:orientation="vertical"
+                android:layout_weight="0.5"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/detalle_direccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="0.5"/>
+
+                <TextView
+                    android:id="@+id/detalle_vermapa"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="0.5"
+                    android:text="Click para ver en mapa"/>
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_weight="0.5"
                 android:weightSum="1">
@@ -143,7 +161,7 @@
                     android:id="@+id/detalle_octanaje1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.5"
                     android:text="93"
                     android:gravity="center"/>
 
@@ -152,7 +170,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_weight="0.7"/>
+                    android:layout_weight="0.5"/>
 
             </LinearLayout>
 
@@ -168,7 +186,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.5"
                     android:text="95"
                     />
 
@@ -177,7 +195,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_weight="0.7"/>
+                    android:layout_weight="0.5"/>
 
             </LinearLayout>
 
@@ -193,7 +211,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.5"
                     android:text="97"
                     android:gravity="center"/>
 
@@ -202,7 +220,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_weight="0.7"/>
+                    android:layout_weight="0.5"/>
 
             </LinearLayout>
 
