@@ -54,9 +54,7 @@ public class EstacionesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), DetalleActivity.class);
-                Bundle info = new Bundle();
-                info.putString("estacion_elegida","funciono!!!");
-                intent.putExtras(info);
+                intent.putExtra("estacion_seleccionada", position);
                 startActivity(intent);
             }
         });

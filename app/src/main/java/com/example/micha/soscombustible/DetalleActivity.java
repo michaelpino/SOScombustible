@@ -22,9 +22,10 @@ public class DetalleActivity extends AppCompatActivity {
                 new Bencinera(2,"Estacion Flanders","Av. siempre viva 740",1),
                 new Bencinera(3,"Estacion Moe","Av. desconocida 1234",3)};
 
-        int posicion = 2;
-        //datos.getString("estacion_seleccionada");
-        String palabra = getIntent().getExtras().getString("estacion_seleccionada");
+        //int posicion = getIntent().getIntExtra("estacion_seleccionada");
+        //String palabra = getIntent().getStringExtra("estacion_seleccionada");
+        Bundle info = this.getIntent().getExtras();
+        int posicion = info.getInt("estacion_seleccionada");
 
         //Se rellena el imageview con el logo segun corresponda
         ImageView imageView1 = (ImageView)findViewById(R.id.detalle_logo);
@@ -39,9 +40,7 @@ public class DetalleActivity extends AppCompatActivity {
         else if (listaBencineras[posicion].getLogo()==5)
             imageView1.setImageResource(R.drawable.ic_lipigas_horizontal);
 
-        //Se rellena el textview del nombre
-        TextView tv_nombre = (TextView)findViewById(R.id.detalle_nombre);
-        tv_nombre.setText(palabra);
+
 
         //Se rellena los imageview de las caracteristicas de la estacion
         Random rn = new Random();
@@ -65,6 +64,10 @@ public class DetalleActivity extends AppCompatActivity {
             imageView1 = (ImageView)findViewById(R.id.detalle_carac5);
             imageView1.setImageResource(R.mipmap.ic_launcher_round);
         }
+
+        //Se rellena el textview del nombre
+        TextView tv_nombre = (TextView)findViewById(R.id.detalle_nombre);
+        tv_nombre.setText(listaBencineras[posicion].getNombre());
 
         //Se rellena el textview de la direccion
         TextView tv_direccion = (TextView)findViewById(R.id.detalle_direccion);
