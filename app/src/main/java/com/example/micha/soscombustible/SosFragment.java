@@ -157,7 +157,7 @@ public class SosFragment extends Fragment {
             TextView tv_octanaje = (TextView)item.findViewById(R.id.itemsos_octanaje);
             tv_octanaje.setText("93 Octanos");
 
-            //Se rellena el textview del octanaje
+            //Se rellena el textview del precio
             TextView tv_precio = (TextView)item.findViewById(R.id.itemsos_precio);
             tv_precio.setText("$"+rn.nextInt(700)+"/L");
 
