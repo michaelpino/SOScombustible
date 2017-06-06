@@ -2,6 +2,7 @@ package com.example.micha.soscombustible;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -27,9 +29,9 @@ public class EstacionesFragment extends Fragment {
 
     //Creo el arreglo de estaciones de servicio
     private Bencinera[] listaBencineras = new Bencinera[]{
-            new Bencinera(1, "Estacion Simpson", "Av. siempre viva 742", 2),
-            new Bencinera(2,"Estacion Flanders","Av. siempre viva 740",1),
-            new Bencinera(3,"Estacion Moe","Av. desconocida 1234",3)};
+            new Bencinera(1, "UNAB Republica", "Republica 239", 2, -33.451255, -70.667884),
+            new Bencinera(2, "UNAB Antonio Varas","Antonio varas 810",1, -33.434667, -70.614825),
+            new Bencinera(3, "UNAB Casona","Fernández Concha 700",3, -33.373960, -70.504978)};
 
 
     @Override
@@ -46,6 +48,16 @@ public class EstacionesFragment extends Fragment {
         vista = (ListView)getView().findViewById(R.id.fragment_estaciones);
 
         vista.setAdapter(new AdaptadorBencinera(this));
+
+        //Aqui se configura que al hacer click en un item se abra un activity de detalle de la estacion
+        vista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), DetalleActivity.class);
+                intent.putExtra("estacion_seleccionada", position);
+                startActivity(intent);
+            }
+        });
     }
 
     //En el constructor llega como parámetro la referencia del ActionBarActivity que contiene el ListView (definimos un atributo para almacenar dicha referencia), también pasamos al constructor de la clase padre mediante el comando super la referencia del ActionBarActivity y el archivo XML asociado a cada item que lo llamamos "itemdelista" y finalmente el ArrayList respectivo
@@ -90,6 +102,8 @@ public class EstacionesFragment extends Fragment {
             return(item);
         }
     }
+
+
 
     /*public void enContruccion(View vista) {
         Toast toast = Toast.makeText( "Más detalles proximamente :)", Toast.LENGTH_SHORT);
