@@ -107,13 +107,14 @@
                     android:gravity="center"
                     android:layout_weight="0.5"/>
 
-                <TextView
+                <Button
                     android:id="@+id/detalle_vermapa"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_weight="0.5"
-                    android:text="Click para ver en mapa"/>
+                    android:text="Ver en mapa"
+                    android:onClick=""/>
 
             </LinearLayout>
 

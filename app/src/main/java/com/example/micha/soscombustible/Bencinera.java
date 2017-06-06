@@ -11,17 +11,21 @@ public class Bencinera {
     private int region;
     private String comuna;
     private int logo;
+    private double latitud;
+    private double longitud;
 
 
 
 
-    public Bencinera(int code, String name, String address, int logo){
+    public Bencinera(int code, String name, String address, int logo, double latitud, double longitud){
         this.setId(code);
         this.setNombre(name);
         this.setDireccion(address);
         this.setLogo(logo);
         this.setRegion(13);
         this.setComuna("Santiago");
+        this.setLatitud(latitud);
+        this.setLongitud(longitud);
 
     }
 
@@ -71,6 +75,22 @@ public class Bencinera {
 
     public void setRegion(int region) {
         this.region = region;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
     }
 
 }

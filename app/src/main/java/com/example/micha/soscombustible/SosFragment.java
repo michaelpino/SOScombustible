@@ -46,9 +46,9 @@ public class SosFragment extends Fragment {
 
     //Creo el arreglo de estaciones de servicio
     private Bencinera[] listaSOS = new Bencinera[]{
-            new Bencinera(1, "Estacion Simpson", "Av. siempre viva 742", 2),
-            new Bencinera(2,"Estacion Flanders","Av. siempre viva 740",1),
-            new Bencinera(3,"Estacion Moe","Av. desconocida 1234",3)};
+            new Bencinera(1, "UNAB Republica", "Republica 239", 2, -33.451255, -70.667884),
+            new Bencinera(2, "UNAB Antonio Varas","Antonio varas 810",1, -33.434667, -70.614825),
+            new Bencinera(3, "UNAB Casona","Fernández Concha 700",3, -33.373960, -70.504978)};
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
