@@ -12,6 +12,8 @@
     <string name="menu_ayuda">Ayuda</string>
     <string name="menu_Configuracion">Configuración</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="latitud">Latitud:</string>
+    <string name="longitud">Longitud:</string>
+    <string name="parar_actualizaciones">Parar Actualizaciones</string>
+    <string name="iniciar_actualizaciones">Iniciar Actualizaciones</string>
 </resources>
