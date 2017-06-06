@@ -14,6 +14,5 @@
 
     <string name="latitud">Latitud:</string>
     <string name="longitud">Longitud:</string>
-    <string name="parar_actualizaciones">Parar Actualizaciones</string>
-    <string name="iniciar_actualizaciones">Iniciar Actualizaciones</string>
+    <string name="show_loc">Mostrar localización</string>
 </resources>

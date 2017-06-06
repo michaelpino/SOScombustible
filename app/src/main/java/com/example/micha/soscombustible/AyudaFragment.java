@@ -12,9 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
+import android.widget.Button;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -48,9 +47,9 @@ public class AyudaFragment extends Fragment
 
     private GoogleApiClient apiClient;
 
-    private TextView lblLatitud;
-    private TextView lblLongitud;
-    private ToggleButton btnActualizar;
+    Location lastLocation;
+
+    private Button btnShowLocation;
 
     public AyudaFragment() {
         // Required empty public constructor
@@ -94,10 +93,16 @@ public class AyudaFragment extends Fragment
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_ayuda, container, false);
+        btnShowLocation = (Button) view.findViewById(R.id.btnShowLoc);
 
-        lblLatitud = (TextView) view.findViewById(R.id.lblLatitud);
-        lblLongitud = (TextView) view.findViewById(R.id.lblLongitud);
-        btnActualizar = (ToggleButton) view.findViewById(R.id.btnActualizar);
+        btnShowLocation.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                showLocation(v);
+            }
+        });
 
         return view;
     }
@@ -122,10 +127,7 @@ public class AyudaFragment extends Fragment
                     PETICION_PERMISO_LOCALIZACION);
         } else {
 
-            Location lastLocation =
-                    LocationServices.FusedLocationApi.getLastLocation(apiClient);
-
-            //Toast.makeText(getActivity(),String.valueOf(lastLocation.getLatitude()), Toast.LENGTH_LONG);
+            lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
             updateUI(lastLocation);
         }
     }
@@ -138,12 +140,28 @@ public class AyudaFragment extends Fragment
     }
 
     private void updateUI(Location loc) {
+        String lat_text, long_text;
         if (loc != null) {
-            lblLatitud.setText("Latitud: " + String.valueOf(loc.getLatitude()));
-            lblLongitud.setText("Longitud: " + String.valueOf(loc.getLongitude()));
+            lat_text = "Latitud: " + String.valueOf(loc.getLatitude());
+            long_text = "Longitud: " + String.valueOf(loc.getLongitude());
         } else {
-            lblLatitud.setText("Latitud: (desconocida)");
-            lblLongitud.setText("Longitud: (desconocida)");
+            lat_text = "Latitud: (desconocida)";
+            long_text = "Longitud: (desconocida)";
+        }
+
+        Toast.makeText(getActivity(), lat_text+"\n"+long_text, Toast.LENGTH_LONG).show();
+    }
+
+    public void showLocation(View v) {
+        if (ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            Toast.makeText(getActivity(), "No tiene permisos para usar el localizador", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
+            updateUI(lastLocation);
         }
     }
 
