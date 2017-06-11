@@ -80,21 +80,23 @@ public class DetalleActivity extends AppCompatActivity {
 
         //Se rellena el textview de la region
         TextView tv_region = (TextView)findViewById(R.id.detalle_region);
-        tv_region.setText(listaBencineras[posicion].getDireccion());
+        //tv_region.setText(listaBencineras[posicion].getDireccion());
+        tv_region.setText("REGION");
 
         //Se rellena el textview de la comuna
         TextView tv_comuna = (TextView)findViewById(R.id.detalle_comuna);
-        tv_comuna.setText(listaBencineras[posicion].getDireccion());
+        //tv_comuna.setText(listaBencineras[posicion].getDireccion());
+        tv_comuna.setText("COMUNA");
 
         //Se rellena el textview del precio
-        TextView tv_precio93 = (TextView)findViewById(R.id.detalle_octanaje1);
-        tv_precio93.setText("$"+rn.nextInt(700)+"/L");
+        TextView tv_precio93 = (TextView)findViewById(R.id.detalle_precio1);
+        tv_precio93.setText("$"+(rn.nextInt(100)+700)+"/L");
 
-        TextView tv_precio95 = (TextView)findViewById(R.id.detalle_octanaje2);
-        tv_precio95.setText("$"+rn.nextInt(700)+"/L");
+        TextView tv_precio95 = (TextView)findViewById(R.id.detalle_precio2);
+        tv_precio95.setText("$"+(rn.nextInt(100)+700)+"/L");
 
-        TextView tv_precio97 = (TextView)findViewById(R.id.detalle_octanaje3);
-        tv_precio97.setText("$"+rn.nextInt(700)+"/L");
+        TextView tv_precio97 = (TextView)findViewById(R.id.detalle_precio3);
+        tv_precio97.setText("$"+(rn.nextInt(100)+700)+"/L");
 
 
         Button verMapa = (Button) findViewById(R.id.detalle_vermapa);

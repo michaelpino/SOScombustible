@@ -171,7 +171,7 @@ public class SosFragment extends Fragment {
 
             //Se rellena el textview del precio
             TextView tv_precio = (TextView)item.findViewById(R.id.itemsos_precio);
-            tv_precio.setText("$"+rn.nextInt(700)+"/L");
+            tv_precio.setText("$"+(rn.nextInt(100)+700)+"/L");
 
             return(item);
         }
