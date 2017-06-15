@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,9 +15,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static final String TAGLOG = "firebase-db";
+
+    public static List<String> regiones;
+    public static List<String> marcas;
+    public static List<Bencinera> listaBencineras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +42,97 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        regiones = new ArrayList<>();
+        marcas = new ArrayList<>();
+        listaBencineras = new ArrayList<>();
+
+        DatabaseReference dbRegiones = FirebaseDatabase.getInstance().getReference().child("regiones");
+        DatabaseReference dbMarcas = FirebaseDatabase.getInstance().getReference().child("marcas");
+        DatabaseReference dbBencineras = FirebaseDatabase.getInstance().getReference().child("bencineras");
+
+        ValueEventListener regionesListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAGLOG, "onDataChange: {" + dataSnapshot.getKey() + ": " + dataSnapshot.getValue() + "}");
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    regiones.add(postSnapshot.getValue().toString());
+                    /*Iterator<String> regionesIterator = regiones.iterator();
+                    Toast.makeText(getApplicationContext(), regionesIterator.next(), Toast.LENGTH_SHORT).show();*/
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAGLOG, "Error!", databaseError.toException());
+            }
+        };
+
+        ValueEventListener marcasListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAGLOG, "onDataChange: {" + dataSnapshot.getKey() + ": " + dataSnapshot.getValue() + "}");
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    marcas.add(postSnapshot.getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAGLOG, "Error!", databaseError.toException());
+            }
+        };
+
+        ValueEventListener bencinerasListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAGLOG, "onDataChange: {" + dataSnapshot.getKey() + ": " + dataSnapshot.getValue() + "}");
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+
+                    String id = (String) child.getKey();
+
+                    String razon_social = (String) child.child("razon_social").getValue();
+                    int brand = child.child("brand").getValue(Integer.class);
+                    double latitud = (double) child.child("latitud").getValue();
+                    double longitud = (double) child.child("longitud").getValue();
+                    String direccion = (String) child.child("direccion").getValue();
+                    int region = child.child("id_region").getValue(Integer.class);
+                    int comuna = child.child("id_comuna").getValue(Integer.class);
+                    String horario = (String) child.child("horario").getValue();
+                    int prc_gas93 = child.child("prc_gas93").getValue(Integer.class);
+                    int prc_gas95 = child.child("prc_gas95").getValue(Integer.class);
+                    int prc_gas97 = child.child("prc_gas97").getValue(Integer.class);
+                    int prc_diesel = child.child("brand").getValue(Integer.class);
+                    int prc_glp = child.child("prc_glp").getValue(Integer.class);
+                    int prc_gnc = child.child("prc_gnc").getValue(Integer.class);
+                    boolean mp_efectivo = Boolean.parseBoolean((String) child.child("mp_efectivo").getValue());
+                    boolean mp_cheque = Boolean.parseBoolean((String) child.child("mp_cheque").getValue());
+                    boolean mp_onus = Boolean.parseBoolean((String) child.child("mp_onus").getValue());
+                    boolean mp_tbk = Boolean.parseBoolean((String) child.child("mp_tbk").getValue());
+                    boolean srv_tienda = Boolean.parseBoolean((String) child.child("razon_social").getValue());
+                    boolean srv_farmacia = Boolean.parseBoolean((String) child.child("srv_tienda").getValue());
+                    boolean srv_mantencion = Boolean.parseBoolean((String) child.child("srv_mantencion").getValue());
+
+                    listaBencineras.add(new Bencinera(id,brand,razon_social,latitud,longitud,direccion,region,comuna,horario,prc_gas93,prc_gas95,
+                            prc_gas97,prc_diesel,prc_glp,prc_gnc,mp_efectivo,mp_cheque,mp_onus,mp_tbk,srv_tienda,srv_farmacia,srv_mantencion));
+                    /*Iterator<String> regionesIterator = regiones.iterator();
+                    Toast.makeText(getApplicationContext(), regionesIterator.next(), Toast.LENGTH_SHORT).show();*/
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAGLOG, "Error!", databaseError.toException());
+            }
+        };
+
+        dbBencineras.addValueEventListener(bencinerasListener);
+
+        dbRegiones.addValueEventListener(regionesListener);
+
+        dbMarcas.addValueEventListener(marcasListener);
+
+        //Toast.makeText(this,regiones.toString(),Toast.LENGTH_SHORT).show();
 
         //Aqui inicia el fragment de SOS (Pantalla iicial)
         Fragment fragment = null;

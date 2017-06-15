@@ -15,8 +15,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import static com.example.micha.soscombustible.MainActivity.listaBencineras;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,10 +48,8 @@ public class SosFragment extends Fragment {
     private ListView vista;
 
     //Creo el arreglo de estaciones de servicio
-    private Bencinera[] listaSOS = new Bencinera[]{
-            new Bencinera(1, "UNAB Republica", "Republica 239", 2, -33.451255, -70.667884),
-            new Bencinera(2, "UNAB Antonio Varas","Antonio varas 810",1, -33.434667, -70.614825),
-            new Bencinera(3, "UNAB Casona","Fernández Concha 700",3, -33.373960, -70.504978)};
+    //private List<Bencinera> listaSOS;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -70,10 +71,10 @@ public class SosFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
+/*
+        listaSOS = new ArrayList<>();
+        listaSOS.add(new Bencinera("co120501",0,"Sociedad Comercial Ibañez Y Negron  Ltda.",-21.092258057248,-69.592823088169,
+                "Panamericana Norte Km 1750, Ex S. V ",1401,1,"24 horas",0,764,0,564,0,0,true,true,true,true,false,false,false));*/
     }
 
     @Override
@@ -108,7 +109,7 @@ public class SosFragment extends Fragment {
         Activity context;
 
         AdaptadorSos(Fragment context) {
-            super(context.getActivity(), R.layout.itemdesos, listaSOS);
+            super(context.getActivity(), R.layout.itemdesos, listaBencineras); //listaSOS
             this.context = context.getActivity();
         }
 
@@ -128,20 +129,21 @@ public class SosFragment extends Fragment {
 
             //Se rellena el textview de la direccion
             TextView textView2 = (TextView)item.findViewById(R.id.itemsos_direccion);
-            textView2.setText(listaSOS[posicion].getDireccion());
+            textView2.setText(listaBencineras.get(posicion).getDireccion()); // <- listaSOS
 
             //Se rellena el imageview con el logo segun corresponda
             ImageView imageView1 = (ImageView)item.findViewById(R.id.itemsos_logo);
-            if (listaSOS[posicion].getLogo()==1)
+            if (listaBencineras.get(posicion).getBrand()==1)
                 imageView1.setImageResource(R.drawable.ic_copec_horizontal);
-            else if (listaSOS[posicion].getLogo()==2)
+            else if (listaBencineras.get(posicion).getBrand()==2)
                 imageView1.setImageResource(R.drawable.ic_shell_horizontal);
-            else if (listaSOS[posicion].getLogo()==3)
+            else if (listaBencineras.get(posicion).getBrand()==3)
                 imageView1.setImageResource(R.drawable.ic_petrobras_horizontal);
-            else if (listaSOS[posicion].getLogo()==4)
+            else if (listaBencineras.get(posicion).getBrand()==4)
                 imageView1.setImageResource(R.drawable.ic_terpel_horizontal);
-            else if (listaSOS[posicion].getLogo()==5)
+            else if (listaBencineras.get(posicion).getBrand()==5)
                 imageView1.setImageResource(R.drawable.ic_lipigas_horizontal);
+            else imageView1.setImageResource(R.drawable.ic_gasstation);
 
             //Se rellena los imageview de las caracteristicas de la estacion
             if (rn.nextDouble()>0.5) {
@@ -171,7 +173,7 @@ public class SosFragment extends Fragment {
 
             //Se rellena el textview del precio
             TextView tv_precio = (TextView)item.findViewById(R.id.itemsos_precio);
-            tv_precio.setText("$"+(rn.nextInt(100)+700)+"/L");
+            tv_precio.setText("$"+listaBencineras.get(posicion).getPrc_gas93()+"/L");
 
             return(item);
         }
