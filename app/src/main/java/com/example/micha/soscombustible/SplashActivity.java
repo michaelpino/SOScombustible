@@ -30,6 +30,12 @@ public class SplashActivity extends AppCompatActivity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
 
+
+
+
+        setContentView(R.layout.activity_splash);
+
+
         listaBencineras = new ArrayList<>();
 
         Query dbBencineras = FirebaseDatabase.getInstance().getReference().child("bencineras").orderByChild("id_comuna");

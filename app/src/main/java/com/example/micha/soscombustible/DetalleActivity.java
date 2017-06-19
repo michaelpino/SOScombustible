@@ -56,24 +56,25 @@ public class DetalleActivity extends AppCompatActivity {
         Random rn = new Random();
         if (rn.nextDouble()>0.5) {
             imageView1 = (ImageView)findViewById(R.id.detalle_carac1);
-            imageView1.setImageResource(R.mipmap.ic_launcher_round);
+            imageView1.setImageResource(R.mipmap.ic_efectivo);
         }
         if (rn.nextDouble()>0.5) {
             imageView1 = (ImageView)findViewById(R.id.detalle_carac2);
-            imageView1.setImageResource(R.mipmap.ic_launcher_round);
+            imageView1.setImageResource(R.mipmap.ic_cheque);
         }
         if (rn.nextDouble()>0.5) {
             imageView1 = (ImageView)findViewById(R.id.detalle_carac3);
-            imageView1.setImageResource(R.mipmap.ic_launcher_round);
+            imageView1.setImageResource(R.mipmap.ic_farmacia);
         }
         if (rn.nextDouble()>0.5) {
             imageView1 = (ImageView)findViewById(R.id.detalle_carac4);
-            imageView1.setImageResource(R.mipmap.ic_launcher_round);
+            imageView1.setImageResource(R.mipmap.ic_comida);
         }
         if (rn.nextDouble()>0.5) {
             imageView1 = (ImageView)findViewById(R.id.detalle_carac5);
-            imageView1.setImageResource(R.mipmap.ic_launcher_round);
+            imageView1.setImageResource(R.mipmap.ic_mantenciones);
         }
+
 
         //Se rellena el textview del nombre
         TextView tv_nombre = (TextView)findViewById(R.id.detalle_nombre);

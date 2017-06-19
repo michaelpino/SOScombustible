@@ -24,9 +24,9 @@ import static com.example.micha.soscombustible.MainActivity.listaBencineras;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SosFragment.OnFragmentInteractionListener} interface
++
  * to handle interaction events.
- * Use the {@link SosFragment#newInstance} factory method to
+
  * create an instance of this fragment.
  */
 public class SosFragment extends Fragment {
@@ -54,8 +54,6 @@ public class SosFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment SosFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -148,23 +146,23 @@ public class SosFragment extends Fragment {
             //Se rellena los imageview de las caracteristicas de la estacion
             if (rn.nextDouble()>0.5) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac1);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.mipmap.ic_efectivo);
             }
             if (rn.nextDouble()>0.5) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac2);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.mipmap.ic_cheque);
             }
             if (rn.nextDouble()>0.5) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac3);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.mipmap.ic_farmacia);
             }
             if (rn.nextDouble()>0.5) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac4);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.mipmap.ic_comida);
             }
             if (rn.nextDouble()>0.5) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac5);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.mipmap.ic_mantenciones);
             }
 
             //Se rellena el textview del octanaje
