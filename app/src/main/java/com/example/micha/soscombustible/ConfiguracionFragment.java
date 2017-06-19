@@ -65,7 +65,6 @@ public class ConfiguracionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //Toast.makeText(getActivity(), MainActivity.marcas.get(5), Toast.LENGTH_SHORT).show();
         return inflater.inflate(R.layout.fragment_configuracion, container, false);
     }
 
