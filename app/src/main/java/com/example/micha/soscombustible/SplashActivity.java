@@ -68,6 +68,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
 
+
         // TODO Auto-generated method stub
         setContentView(R.layout.activity_splash);
 

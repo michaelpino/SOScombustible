@@ -1,5 +1,12 @@
 package com.example.micha.soscombustible;
 
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +21,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +41,7 @@ import static com.example.micha.soscombustible.MainActivity.listaBencineras;
  * Use the {@link SosFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SosFragment extends Fragment {
+public class SosFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks{
    /* // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,7 +53,18 @@ public class SosFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;*/
 
-    public SosFragment() {
+    private static final String LOGTAG = "android-localizacion";
+
+    private static final int PETICION_PERMISO_LOCALIZACION = 101;
+
+    private GoogleApiClient apiClient;
+
+    Location lastLocation;
+
+    private Location miUbicacion;
+
+
+   public SosFragment() {
         // Required empty public constructor
     }
 
@@ -75,18 +98,143 @@ public class SosFragment extends Fragment {
         listaSOS = new ArrayList<>();
         listaSOS.add(new Bencinera("co120501",0,"Sociedad Comercial Ibañez Y Negron  Ltda.",-21.092258057248,-69.592823088169,
                 "Panamericana Norte Km 1750, Ex S. V ",1401,1,"24 horas",0,764,0,564,0,0,true,true,true,true,false,false,false));*/
+
+        apiClient = new GoogleApiClient.Builder(getActivity())
+                .enableAutoManage(getActivity(), this)
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API)
+                .build();
+
+        //miUbicacion= ubicame();
+        /*while (miUbicacion==null){
+            miUbicacion= ubicame();
+        }*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        //miUbicacion= ubicame();
+        /*while (miUbicacion!=null){
+            miUbicacion= ubicame();
+        }*/
         return inflater.inflate(R.layout.fragment_sos, container, false);
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        //Se ha producido un error que no se puede resolver automáticamente
+        //y la conexión con los Google Play Services no se ha establecido.
+
+        Log.e(LOGTAG, "Error grave al conectar con Google Play Services");
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        //Conectado correctamente a Google Play Services
+
+        if (ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PETICION_PERMISO_LOCALIZACION);
+        } else {
+
+            lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
+            updateUI(lastLocation);
+
+            miUbicacion = lastLocation;
+            vista = (ListView)getView().findViewById(R.id.fragment_sos);
+
+            vista.setAdapter(new SosFragment.AdaptadorSos(this));
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        //Se ha interrumpido la conexión con Google Play Services
+
+        Log.e(LOGTAG, "Se ha interrumpido la conexión con Google Play Services");
+    }
+
+    private void updateUI(Location loc) {
+        String lat_text, long_text;
+        if (loc != null) {
+            lat_text = "Latitud: " + String.valueOf(loc.getLatitude());
+            long_text = "Longitud: " + String.valueOf(loc.getLongitude());
+        } else {
+            lat_text = "Latitud: (desconocida)";
+            long_text = "Longitud: (desconocida)";
+        }
+
+        Toast.makeText(getActivity(), lat_text+"\n"+long_text, Toast.LENGTH_LONG).show();
+    }
+
+    public void showLocation() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getActivity(), "No tiene permisos para usar el localizador", Toast.LENGTH_LONG).show();
+        } else {
+
+            lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
+            updateUI(lastLocation);
+        }
+    }
+
+    public Location ubicame() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            //Toast.makeText(getActivity(), "FALLO!!!", Toast.LENGTH_LONG).show();
+            updateUI(lastLocation);
+            return lastLocation;
+        } else {
+
+            lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
+            updateUI(lastLocation);
+            return lastLocation;
+
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PETICION_PERMISO_LOCALIZACION) {
+            if (grantResults.length == 1
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                //Permiso concedido
+
+                @SuppressWarnings("MissingPermission")
+                Location lastLocation =
+                        LocationServices.FusedLocationApi.getLastLocation(apiClient);
+
+                updateUI(lastLocation);
+
+            } else {
+                //Permiso denegado:
+                //Deberíamos deshabilitar toda la funcionalidad relativa a la localización.
+
+                Log.e(LOGTAG, "Permiso denegado");
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        apiClient.stopAutoManage(getActivity());
+        apiClient.disconnect();
     }
 
     @Override
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
+        miUbicacion= ubicame();
+
+
+        //showLocation();
 
         vista = (ListView)getView().findViewById(R.id.fragment_sos);
 
@@ -119,9 +267,23 @@ public class SosFragment extends Fragment {
 
             Random rn = new Random();
 
-            //Se rellena el textview de la distancia
-            TextView tv_distancia = (TextView)item.findViewById(R.id.itemsos_distancia);
-            tv_distancia.setText(" "+rn.nextInt(150)+" ");
+            //Location miUbicacion= ubicame();
+            float distancia;
+
+            if (miUbicacion!= null){
+                distancia = miUbicacion.distanceTo(listaBencineras.get(posicion).getUbicacion());
+                distancia = distancia/1000;
+                TextView tv_distancia = (TextView) item.findViewById(R.id.itemsos_distancia);
+                tv_distancia.setText(" " + (int)distancia + " ");
+
+            } else {
+                //Se rellena el textview de la distancia
+                TextView tv_distancia = (TextView) item.findViewById(R.id.itemsos_distancia);
+                tv_distancia.setText( "Buscando señal..." );
+            }
+
+
+
 
             //Se rellena el textview de la unidad de medida
             TextView tv_unidad = (TextView)item.findViewById(R.id.itemsos_unidadmedida);
@@ -173,7 +335,11 @@ public class SosFragment extends Fragment {
 
             //Se rellena el textview del precio
             TextView tv_precio = (TextView)item.findViewById(R.id.itemsos_precio);
-            tv_precio.setText("$"+listaBencineras.get(posicion).getPrc_gas93()+"/L");
+            if(listaBencineras.get(posicion).getPrc_gas93() != 0) {
+                tv_precio.setText("$" + listaBencineras.get(posicion).getPrc_gas93() + "/L");
+            } else {
+                tv_precio.setText(" Agotada ");
+            }
 
             return(item);
         }
