@@ -146,25 +146,25 @@ public class SosFragment extends Fragment {
             else imageView1.setImageResource(R.drawable.ic_gasstation);
 
             //Se rellena los imageview de las caracteristicas de la estacion
-            if (rn.nextDouble()>0.5) {
+            if (listaBencineras.get(posicion).isMp_cheque()) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac1);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.drawable.ic_cheque);
             }
-            if (rn.nextDouble()>0.5) {
+            if (listaBencineras.get(posicion).isMp_tbk()) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac2);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.drawable.ic_redcompra);
             }
-            if (rn.nextDouble()>0.5) {
+            if (listaBencineras.get(posicion).isMp_efectivo()) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac3);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.drawable.ic_efectivo);
             }
-            if (rn.nextDouble()>0.5) {
+            if (listaBencineras.get(posicion).isSrv_mantencion()) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac4);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.drawable.ic_mantenciones);
             }
-            if (rn.nextDouble()>0.5) {
+            if (listaBencineras.get(posicion).isSrv_farmacia()) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac5);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.drawable.ic_farmacia);
             }
 
             //Se rellena el textview del octanaje
