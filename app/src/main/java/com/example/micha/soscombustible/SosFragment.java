@@ -170,12 +170,12 @@ public class SosFragment extends Fragment implements GoogleApiClient.OnConnectio
             long_text = "Longitud: (desconocida)";
         }
 
-        Toast.makeText(getActivity(), lat_text+"\n"+long_text, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getActivity(), lat_text+"\n"+long_text, Toast.LENGTH_LONG).show();
     }
 
     public void showLocation() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getActivity(), "No tiene permisos para usar el localizador", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), "No tiene permisos para usar el localizador", Toast.LENGTH_LONG).show();
         } else {
 
             lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
