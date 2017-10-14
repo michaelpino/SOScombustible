@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "110450032723",
+    "firebase_url": "https://soscombustible-f359c.firebaseio.com",
+    "project_id": "soscombustible-f359c",
+    "storage_bucket": "soscombustible-f359c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110450032723:android:2a987970d0469515",
+        "android_client_info": {
+          "package_name": "com.example.micha.soscombustible"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110450032723-s8ng33oslmc6nt818tv6fuvcboubopm1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.micha.soscombustible",
+            "certificate_hash": "8fd096370a1b8396f37c7000df70351a0be660a7"
+          }
+        },
+        {
+          "client_id": "110450032723-p8avps5u48a6ma3puoh05aknh98m8c2n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABOUsRbYAaWX4KqegqCo_ifKplPraFGSc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110450032723-p8avps5u48a6ma3puoh05aknh98m8c2n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

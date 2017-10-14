@@ -1,7 +1,14 @@
 package com.example.micha.soscombustible;
 
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.app.Activity;
-import android.content.Context;
+//import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,9 +21,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import static com.example.micha.soscombustible.MainActivity.listaBencineras;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +41,7 @@ import java.util.Random;
  * Use the {@link SosFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SosFragment extends Fragment {
+public class SosFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks{
    /* // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,17 +53,26 @@ public class SosFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;*/
 
-    public SosFragment() {
+    private static final String LOGTAG = "android-localizacion";
+
+    private static final int PETICION_PERMISO_LOCALIZACION = 101;
+
+    private GoogleApiClient apiClient;
+
+    Location lastLocation;
+
+    private Location miUbicacion;
+
+
+   public SosFragment() {
         // Required empty public constructor
     }
 
     private ListView vista;
 
     //Creo el arreglo de estaciones de servicio
-    private Bencinera[] listaSOS = new Bencinera[]{
-            new Bencinera(1, "UNAB Republica", "Republica 239", 2, -33.451255, -70.667884),
-            new Bencinera(2, "UNAB Antonio Varas","Antonio varas 810",1, -33.434667, -70.614825),
-            new Bencinera(3, "UNAB Casona","Fernández Concha 700",3, -33.373960, -70.504978)};
+    //private List<Bencinera> listaSOS;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -70,9 +94,20 @@ public class SosFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+/*
+        listaSOS = new ArrayList<>();
+        listaSOS.add(new Bencinera("co120501",0,"Sociedad Comercial Ibañez Y Negron  Ltda.",-21.092258057248,-69.592823088169,
+                "Panamericana Norte Km 1750, Ex S. V ",1401,1,"24 horas",0,764,0,564,0,0,true,true,true,true,false,false,false));*/
+
+        apiClient = new GoogleApiClient.Builder(getActivity())
+                .enableAutoManage(getActivity(), this)
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API)
+                .build();
+
+        //miUbicacion= ubicame();
+        /*while (miUbicacion==null){
+            miUbicacion= ubicame();
         }*/
     }
 
@@ -80,12 +115,126 @@ public class SosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        //miUbicacion= ubicame();
+        /*while (miUbicacion!=null){
+            miUbicacion= ubicame();
+        }*/
         return inflater.inflate(R.layout.fragment_sos, container, false);
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        //Se ha producido un error que no se puede resolver automáticamente
+        //y la conexión con los Google Play Services no se ha establecido.
+
+        Log.e(LOGTAG, "Error grave al conectar con Google Play Services");
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        //Conectado correctamente a Google Play Services
+
+        if (ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PETICION_PERMISO_LOCALIZACION);
+        } else {
+
+            lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
+            updateUI(lastLocation);
+
+            miUbicacion = lastLocation;
+            vista = (ListView)getView().findViewById(R.id.fragment_sos);
+
+            vista.setAdapter(new SosFragment.AdaptadorSos(this));
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        //Se ha interrumpido la conexión con Google Play Services
+
+        Log.e(LOGTAG, "Se ha interrumpido la conexión con Google Play Services");
+    }
+
+    private void updateUI(Location loc) {
+        String lat_text, long_text;
+        if (loc != null) {
+            lat_text = "Latitud: " + String.valueOf(loc.getLatitude());
+            long_text = "Longitud: " + String.valueOf(loc.getLongitude());
+        } else {
+            lat_text = "Latitud: (desconocida)";
+            long_text = "Longitud: (desconocida)";
+        }
+
+        //Toast.makeText(getActivity(), lat_text+"\n"+long_text, Toast.LENGTH_LONG).show();
+    }
+
+    public void showLocation() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            //Toast.makeText(getActivity(), "No tiene permisos para usar el localizador", Toast.LENGTH_LONG).show();
+        } else {
+
+            lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
+            updateUI(lastLocation);
+        }
+    }
+
+    public Location ubicame() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            //Toast.makeText(getActivity(), "FALLO!!!", Toast.LENGTH_LONG).show();
+            updateUI(lastLocation);
+            return lastLocation;
+        } else {
+
+            lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
+            updateUI(lastLocation);
+            return lastLocation;
+
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PETICION_PERMISO_LOCALIZACION) {
+            if (grantResults.length == 1
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                //Permiso concedido
+
+                @SuppressWarnings("MissingPermission")
+                Location lastLocation =
+                        LocationServices.FusedLocationApi.getLastLocation(apiClient);
+
+                updateUI(lastLocation);
+
+            } else {
+                //Permiso denegado:
+                //Deberíamos deshabilitar toda la funcionalidad relativa a la localización.
+
+                Log.e(LOGTAG, "Permiso denegado");
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        apiClient.stopAutoManage(getActivity());
+        apiClient.disconnect();
     }
 
     @Override
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
+        miUbicacion= ubicame();
+
+
+        //showLocation();
 
         vista = (ListView)getView().findViewById(R.id.fragment_sos);
 
@@ -108,7 +257,7 @@ public class SosFragment extends Fragment {
         Activity context;
 
         AdaptadorSos(Fragment context) {
-            super(context.getActivity(), R.layout.itemdesos, listaSOS);
+            super(context.getActivity(), R.layout.itemdesos, listaBencineras); //listaSOS
             this.context = context.getActivity();
         }
 
@@ -118,9 +267,23 @@ public class SosFragment extends Fragment {
 
             Random rn = new Random();
 
-            //Se rellena el textview de la distancia
-            TextView tv_distancia = (TextView)item.findViewById(R.id.itemsos_distancia);
-            tv_distancia.setText(" "+rn.nextInt(150)+" ");
+            //Location miUbicacion= ubicame();
+            float distancia;
+
+            if (miUbicacion!= null){
+                distancia = miUbicacion.distanceTo(listaBencineras.get(posicion).getUbicacion());
+                distancia = distancia/1000;
+                TextView tv_distancia = (TextView) item.findViewById(R.id.itemsos_distancia);
+                tv_distancia.setText(" " + (int)distancia + " ");
+
+            } else {
+                //Se rellena el textview de la distancia
+                TextView tv_distancia = (TextView) item.findViewById(R.id.itemsos_distancia);
+                tv_distancia.setText( "Buscando señal..." );
+            }
+
+
+
 
             //Se rellena el textview de la unidad de medida
             TextView tv_unidad = (TextView)item.findViewById(R.id.itemsos_unidadmedida);
@@ -128,41 +291,42 @@ public class SosFragment extends Fragment {
 
             //Se rellena el textview de la direccion
             TextView textView2 = (TextView)item.findViewById(R.id.itemsos_direccion);
-            textView2.setText(listaSOS[posicion].getDireccion());
+            textView2.setText(listaBencineras.get(posicion).getDireccion()); // <- listaSOS
 
             //Se rellena el imageview con el logo segun corresponda
             ImageView imageView1 = (ImageView)item.findViewById(R.id.itemsos_logo);
-            if (listaSOS[posicion].getLogo()==1)
+            if (listaBencineras.get(posicion).getBrand()==1)
                 imageView1.setImageResource(R.drawable.ic_copec_horizontal);
-            else if (listaSOS[posicion].getLogo()==2)
+            else if (listaBencineras.get(posicion).getBrand()==2)
                 imageView1.setImageResource(R.drawable.ic_shell_horizontal);
-            else if (listaSOS[posicion].getLogo()==3)
+            else if (listaBencineras.get(posicion).getBrand()==3)
                 imageView1.setImageResource(R.drawable.ic_petrobras_horizontal);
-            else if (listaSOS[posicion].getLogo()==4)
+            else if (listaBencineras.get(posicion).getBrand()==4)
                 imageView1.setImageResource(R.drawable.ic_terpel_horizontal);
-            else if (listaSOS[posicion].getLogo()==5)
+            else if (listaBencineras.get(posicion).getBrand()==5)
                 imageView1.setImageResource(R.drawable.ic_lipigas_horizontal);
+            else imageView1.setImageResource(R.drawable.ic_gasstation);
 
             //Se rellena los imageview de las caracteristicas de la estacion
-            if (rn.nextDouble()>0.5) {
+            if (listaBencineras.get(posicion).isMp_cheque()) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac1);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.drawable.ic_cheque);
             }
-            if (rn.nextDouble()>0.5) {
+            if (listaBencineras.get(posicion).isMp_tbk()) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac2);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.drawable.ic_redcompra);
             }
-            if (rn.nextDouble()>0.5) {
+            if (listaBencineras.get(posicion).isMp_efectivo()) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac3);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.drawable.ic_efectivo);
             }
-            if (rn.nextDouble()>0.5) {
+            if (listaBencineras.get(posicion).isSrv_mantencion()) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac4);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.drawable.ic_mantenciones);
             }
-            if (rn.nextDouble()>0.5) {
+            if (listaBencineras.get(posicion).isSrv_farmacia()) {
                 imageView1 = (ImageView)item.findViewById(R.id.itemsos_carac5);
-                imageView1.setImageResource(R.mipmap.ic_launcher_round);
+                imageView1.setImageResource(R.drawable.ic_farmacia);
             }
 
             //Se rellena el textview del octanaje
@@ -171,7 +335,11 @@ public class SosFragment extends Fragment {
 
             //Se rellena el textview del precio
             TextView tv_precio = (TextView)item.findViewById(R.id.itemsos_precio);
-            tv_precio.setText("$"+rn.nextInt(700)+"/L");
+            if(listaBencineras.get(posicion).getPrc_gas93() != 0) {
+                tv_precio.setText("$" + listaBencineras.get(posicion).getPrc_gas93() + "/L");
+            } else {
+                tv_precio.setText(" Agotada ");
+            }
 
             return(item);
         }
