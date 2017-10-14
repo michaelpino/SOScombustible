@@ -53,9 +53,10 @@ public class UbicacionActivity extends FragmentActivity implements OnMapReadyCal
 
             mMap.setMyLocationEnabled(true);
         }else{
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION)){
+            ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION);
+            /*if (ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION)){
                 //dialogo Explicativo
-            }else
+            }else*/
                 //Solicitar los permisos
                 ActivityCompat.requestPermissions(this, new String[]{
                         android.Manifest.permission.ACCESS_FINE_LOCATION},LOCATION_RESQUEST_CODE);

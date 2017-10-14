@@ -3,11 +3,11 @@ package com.example.micha.soscombustible;
 import android.app.Activity;
 //import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+//import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+//import android.support.v7.app.AppCompatActivity;
+//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -150,17 +150,17 @@ public class EstacionesFragment extends Fragment {
 
             //Se rellena el imageview con el logo segun corresponda
             ImageView imageView1 = (ImageView)item.findViewById(R.id.item_logo);
-            if (listaBencineras.get(posicion).getBrand()==1)
-                imageView1.setImageResource(R.drawable.ic_copec_horizontal);
-            else if (listaBencineras.get(posicion).getBrand()==2)
-                imageView1.setImageResource(R.drawable.ic_shell_horizontal);
-            else if (listaBencineras.get(posicion).getBrand()==3)
-                imageView1.setImageResource(R.drawable.ic_petrobras_horizontal);
-            else if (listaBencineras.get(posicion).getBrand()==4)
-                imageView1.setImageResource(R.drawable.ic_terpel_horizontal);
-            else if (listaBencineras.get(posicion).getBrand()==5)
-                imageView1.setImageResource(R.drawable.ic_lipigas_horizontal);
-            else imageView1.setImageResource(R.drawable.ic_gasstation);
+            if (listaBencineras.get(posicion).getBrand()==1){
+                imageView1.setImageResource(R.drawable.ic_copec_horizontal);}
+            else if (listaBencineras.get(posicion).getBrand()==2){
+                imageView1.setImageResource(R.drawable.ic_shell_horizontal);}
+            else if (listaBencineras.get(posicion).getBrand()==3){
+                imageView1.setImageResource(R.drawable.ic_petrobras_horizontal);}
+            else if (listaBencineras.get(posicion).getBrand()==4){
+                imageView1.setImageResource(R.drawable.ic_terpel_horizontal);}
+            else if (listaBencineras.get(posicion).getBrand()==5){
+                imageView1.setImageResource(R.drawable.ic_lipigas_horizontal);}
+            else {imageView1.setImageResource(R.drawable.ic_gasstation);}
 
             //Se rellena el imageview con el icono de "ver más"
             ImageView imageView2 = (ImageView)item.findViewById(R.id.item_vermas);
@@ -171,51 +171,4 @@ public class EstacionesFragment extends Fragment {
     }
 
 
-
-    /*public void enContruccion(View vista) {
-        Toast toast = Toast.makeText( "Más detalles proximamente :)", Toast.LENGTH_SHORT);
-        toast.show();
-    }*/
-
-
-
-
-    /*// Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }*/
-
-    /*@Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }*/
-
-    /*@Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }*/
-
-    /*
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    /*public interface OnFragmentInteractionListener {
-        // Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }*/
 }

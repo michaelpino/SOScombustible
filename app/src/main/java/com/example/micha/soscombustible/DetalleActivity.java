@@ -5,14 +5,14 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
+//import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
+//import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 import java.util.Random;
 
 import static com.example.micha.soscombustible.MainActivity.listaBencineras;
@@ -38,22 +38,22 @@ public class DetalleActivity extends AppCompatActivity {
 
         //Se rellena el imageview con el logo segun corresponda
         ImageView imageView1 = (ImageView)findViewById(R.id.detalle_logo);
-        if (listaBencineras.get(posicion).getBrand()==1)
-            imageView1.setImageResource(R.drawable.ic_copec_horizontal);
-        else if (listaBencineras.get(posicion).getBrand()==2)
-            imageView1.setImageResource(R.drawable.ic_shell_horizontal);
-        else if (listaBencineras.get(posicion).getBrand()==3)
-            imageView1.setImageResource(R.drawable.ic_petrobras_horizontal);
-        else if (listaBencineras.get(posicion).getBrand()==4)
-            imageView1.setImageResource(R.drawable.ic_terpel_horizontal);
-        else if (listaBencineras.get(posicion).getBrand()==5)
-            imageView1.setImageResource(R.drawable.ic_lipigas_horizontal);
-        else imageView1.setImageResource(R.drawable.ic_gasstation);
+        if (listaBencineras.get(posicion).getBrand()==1){
+            imageView1.setImageResource(R.drawable.ic_copec_horizontal);}
+        else if (listaBencineras.get(posicion).getBrand()==2){
+            imageView1.setImageResource(R.drawable.ic_shell_horizontal);}
+        else if (listaBencineras.get(posicion).getBrand()==3){
+            imageView1.setImageResource(R.drawable.ic_petrobras_horizontal);}
+        else if (listaBencineras.get(posicion).getBrand()==4){
+            imageView1.setImageResource(R.drawable.ic_terpel_horizontal);}
+        else if (listaBencineras.get(posicion).getBrand()==5){
+            imageView1.setImageResource(R.drawable.ic_lipigas_horizontal);}
+        else {imageView1.setImageResource(R.drawable.ic_gasstation);}
 
 
 
         //Se rellena los imageview de las caracteristicas de la estacion
-        Random rn = new Random();
+        //Random rn = new Random();
         if (listaBencineras.get(posicion).isMp_cheque()) {
             imageView1 = (ImageView)findViewById(R.id.detalle_carac1);
             imageView1.setImageResource(R.drawable.ic_cheque);

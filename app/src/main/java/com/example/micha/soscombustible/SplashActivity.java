@@ -4,32 +4,32 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Criteria;
+//import android.content.pm.PackageManager;
+//import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
+//import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
+//import android.view.View;
+//import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+//import android.content.Intent;
+//import android.os.Bundle;
+//import android.support.design.widget.FloatingActionButton;
+//import android.support.design.widget.Snackbar;
+//import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
+//import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -110,7 +110,7 @@ public class SplashActivity extends AppCompatActivity {
                     pendingLoadCount[0] = pendingLoadCount[0] - 1;
                     if (pendingLoadCount[0] == 0) {
                         Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                        Bundle bundle = new Bundle();
+                        //Bundle bundle = new Bundle();
                         startActivity(intent);
                         finish();
                     }
@@ -125,11 +125,7 @@ public class SplashActivity extends AppCompatActivity {
 
         dbBencineras.addValueEventListener(bencinerasListener);
     }
-    private boolean checkLocation() {
-        if (!isLocationEnabled())
-            showAlert();
-        return isLocationEnabled();
-    }
+
 
     private void showAlert() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -151,10 +147,10 @@ public class SplashActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private boolean isLocationEnabled() {
+    /*private boolean isLocationEnabled() {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    }
+    }*/
 
 
     private final LocationListener locationListenerGPS = new LocationListener() {

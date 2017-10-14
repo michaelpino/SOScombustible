@@ -10,7 +10,7 @@ import android.util.Log;
 import android.app.Activity;
 //import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+//import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,14 +21,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 import java.util.Random;
 
 import static com.example.micha.soscombustible.MainActivity.listaBencineras;
@@ -42,16 +42,6 @@ import static com.example.micha.soscombustible.MainActivity.listaBencineras;
  * create an instance of this fragment.
  */
 public class SosFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks{
-   /* // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;*/
 
     private static final String LOGTAG = "android-localizacion";
 
@@ -73,23 +63,7 @@ public class SosFragment extends Fragment implements GoogleApiClient.OnConnectio
     //Creo el arreglo de estaciones de servicio
     //private List<Bencinera> listaSOS;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SosFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    /*public static SosFragment newInstance(String param1, String param2) {
-        SosFragment fragment = new SosFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }*/
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -161,7 +135,7 @@ public class SosFragment extends Fragment implements GoogleApiClient.OnConnectio
     }
 
     private void updateUI(Location loc) {
-        String lat_text, long_text;
+        String lat_text = "", long_text = "";
         if (loc != null) {
             lat_text = "Latitud: " + String.valueOf(loc.getLatitude());
             long_text = "Longitud: " + String.valueOf(loc.getLongitude());
@@ -174,13 +148,14 @@ public class SosFragment extends Fragment implements GoogleApiClient.OnConnectio
     }
 
     public void showLocation() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
+        /*if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             //Toast.makeText(getActivity(), "No tiene permisos para usar el localizador", Toast.LENGTH_LONG).show();
-        } else {
+        } else {*/
 
             lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
             updateUI(lastLocation);
-        }
+        //}
     }
 
     public Location ubicame() {
@@ -265,7 +240,7 @@ public class SosFragment extends Fragment implements GoogleApiClient.OnConnectio
             LayoutInflater inflater = context.getLayoutInflater();
             View item = inflater.inflate(R.layout.itemdesos, null);
 
-            Random rn = new Random();
+            //Random rn = new Random();
 
             //Location miUbicacion= ubicame();
             float distancia;
@@ -295,17 +270,17 @@ public class SosFragment extends Fragment implements GoogleApiClient.OnConnectio
 
             //Se rellena el imageview con el logo segun corresponda
             ImageView imageView1 = (ImageView)item.findViewById(R.id.itemsos_logo);
-            if (listaBencineras.get(posicion).getBrand()==1)
-                imageView1.setImageResource(R.drawable.ic_copec_horizontal);
-            else if (listaBencineras.get(posicion).getBrand()==2)
-                imageView1.setImageResource(R.drawable.ic_shell_horizontal);
-            else if (listaBencineras.get(posicion).getBrand()==3)
-                imageView1.setImageResource(R.drawable.ic_petrobras_horizontal);
-            else if (listaBencineras.get(posicion).getBrand()==4)
-                imageView1.setImageResource(R.drawable.ic_terpel_horizontal);
-            else if (listaBencineras.get(posicion).getBrand()==5)
-                imageView1.setImageResource(R.drawable.ic_lipigas_horizontal);
-            else imageView1.setImageResource(R.drawable.ic_gasstation);
+            if (listaBencineras.get(posicion).getBrand()==1){
+                imageView1.setImageResource(R.drawable.ic_copec_horizontal);}
+            else if (listaBencineras.get(posicion).getBrand()==2){
+                imageView1.setImageResource(R.drawable.ic_shell_horizontal);}
+            else if (listaBencineras.get(posicion).getBrand()==3){
+                imageView1.setImageResource(R.drawable.ic_petrobras_horizontal);}
+            else if (listaBencineras.get(posicion).getBrand()==4){
+                imageView1.setImageResource(R.drawable.ic_terpel_horizontal);}
+            else if (listaBencineras.get(posicion).getBrand()==5){
+                imageView1.setImageResource(R.drawable.ic_lipigas_horizontal);}
+            else {imageView1.setImageResource(R.drawable.ic_gasstation);}
 
             //Se rellena los imageview de las caracteristicas de la estacion
             if (listaBencineras.get(posicion).isMp_cheque()) {
@@ -344,42 +319,5 @@ public class SosFragment extends Fragment implements GoogleApiClient.OnConnectio
             return(item);
         }
     }
-    /*// TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }*/
 
-    /*@Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }*/
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    /*public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }*/
 }
